@@ -166,7 +166,7 @@ defs_kin_idex = """
 """
 
 defs_kin_corexy_ac = """
-    struct stepper_kinematics *cartesian_stepper_alloc(char axis);
+    struct stepper_kinematics *corexy_ac_stepper_alloc(char axis);
 """
 
 defs_serialqueue = """
