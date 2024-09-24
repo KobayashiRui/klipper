@@ -128,11 +128,23 @@ class ForceMove:
         toolhead = self.printer.lookup_object('toolhead')
         toolhead.get_last_move_time()
         curpos = toolhead.get_position()
-        x = gcmd.get_float('X', curpos[0])
-        y = gcmd.get_float('Y', curpos[1])
-        z = gcmd.get_float('Z', curpos[2])
-        logging.info("SET_KINEMATIC_POSITION pos=%.3f,%.3f,%.3f", x, y, z)
-        toolhead.set_position([x, y, z, curpos[3]], homing_axes=(0, 1, 2))
+        if(len(curpos) == 4):
+            x = gcmd.get_float('X', curpos[0])
+            y = gcmd.get_float('Y', curpos[1])
+            z = gcmd.get_float('Z', curpos[2])
+            logging.info("SET_KINEMATIC_POSITION pos=%.3f,%.3f,%.3f", x, y, z)
+            toolhead.set_position([x, y, z, curpos[3]], homing_axes=(0, 1, 2))
+        #TODO: Support other than CoreXYAC.
+        elif(len(curpos) == 7):
+            x = gcmd.get_float('X', curpos[0])
+            y = gcmd.get_float('Y', curpos[1])
+            z = gcmd.get_float('Z', curpos[2])
+            u = gcmd.get_float('A', curpos[4])
+            v = gcmd.get_float('B', curpos[5])
+            w = gcmd.get_float('C', curpos[6])
+            logging.info("SET_KINEMATIC_POSITION pos=%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", x, y, z,u,v,w)
+            #Only CoreXYAC
+            toolhead.set_position([x, y, z, curpos[3], u, v, w], homing_axes=(0, 1, 2, 3, 4))
 
 def load_config(config):
     return ForceMove(config)

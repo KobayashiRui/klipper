@@ -201,7 +201,8 @@ trapq_finalize_moves(struct trapq *tq, double print_time
 // Note a position change in the trapq history
 void __visible
 trapq_set_position(struct trapq *tq, double print_time
-                   , double pos_x, double pos_y, double pos_z)
+                   , double pos_x, double pos_y, double pos_z
+                   , double pos_u, double pos_v, double pos_w)
 {
     // Flush all moves from trapq
     trapq_finalize_moves(tq, NEVER_TIME, 0);
@@ -224,6 +225,9 @@ trapq_set_position(struct trapq *tq, double print_time
     m->start_pos.x = pos_x;
     m->start_pos.y = pos_y;
     m->start_pos.z = pos_z;
+    m->start_pos.u = pos_u;
+    m->start_pos.v = pos_v;
+    m->start_pos.w = pos_w;
     list_add_head(&m->node, &tq->history);
 }
 
