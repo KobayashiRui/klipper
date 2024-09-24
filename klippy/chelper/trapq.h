@@ -6,9 +6,9 @@
 struct coord {
     union {
         struct {
-            double x, y, z;
+            double x, y, z, u, v, w;
         };
-        double axis[3];
+        double axis[6];
     };
 };
 
