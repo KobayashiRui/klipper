@@ -130,10 +130,11 @@ class MCU_stepper:
         return ffi_lib.itersolve_calc_position_from_coord(
             self._stepper_kinematics, coord[0], coord[1], coord[2])
     def set_position(self, coord):
+        #TODO: corexy_ac
         mcu_pos = self.get_mcu_position()
         sk = self._stepper_kinematics
         ffi_main, ffi_lib = chelper.get_ffi()
-        ffi_lib.itersolve_set_position(sk, coord[0], coord[1], coord[2])
+        ffi_lib.itersolve_set_position(sk, coord[0], coord[1], coord[2], coord[4], coord[5], coord[6])
         self._set_mcu_position(mcu_pos)
     def get_commanded_position(self):
         ffi_main, ffi_lib = chelper.get_ffi()

@@ -458,18 +458,16 @@ class ToolHead:
     def set_position(self, newpos, homing_axes=()):
         self.flush_step_generation()
         ffi_main, ffi_lib = chelper.get_ffi()
-        if(len(newpos) == 4):
-            ffi_lib.trapq_set_position(self.trapq, self.print_time,
-                                       newpos[0], newpos[1], newpos[2], 0.0, 0.0, 0.0)
-            self.commanded_pos[:4] = newpos
-            self.kin.set_position(newpos, homing_axes)
-            self.printer.send_event("toolhead:set_position")
-        elif(len(newpos) == 7):
-            ffi_lib.trapq_set_position(self.trapq, self.print_time,
-                                       newpos[0], newpos[1], newpos[2], newpos[4], newpos[5], newpos[6])
-            self.commanded_pos[:] = newpos
-            self.kin.set_position(newpos, homing_axes)
-            self.printer.send_event("toolhead:set_position")
+        newpos_resize = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        for i,pos in enumerate(newpos):
+            newpos_resize[i] = pos
+
+        ffi_lib.trapq_set_position(self.trapq, self.print_time,
+                                   newpos[0], newpos[1], newpos[2], newpos[4], newpos[5], newpos[6])
+        self.commanded_pos[:] = newpos
+        self.kin.set_position(newpos, homing_axes)
+        self.printer.send_event("toolhead:set_position")
+
     def move(self, newpos, speed):
         move = Move(self, self.commanded_pos, newpos, speed)
         if not move.move_d:
