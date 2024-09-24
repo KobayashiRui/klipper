@@ -21,7 +21,8 @@ class Move:
         self.timing_callbacks = []
         velocity = min(speed, toolhead.max_velocity)
         self.is_kinematic_move = True
-        self.axes_d = axes_d = [end_pos[i] - start_pos[i] for i in (0, 1, 2, 3, 4, 5, 6)]
+        self.axes_d = axes_d = [end_pos[i] - start_pos[i] for i in (0, 1, 2, 3, 4, 5, 6)] #support uvw
+        #TODO: corexy_ac
         self.move_d = move_d = math.sqrt(sum([d*d for d in axes_d[:3]]))
         if move_d < .000000001:
             # Extrude only move
@@ -348,7 +349,9 @@ class ToolHead:
                     self.trapq, next_move_time,
                     move.accel_t, move.cruise_t, move.decel_t,
                     move.start_pos[0], move.start_pos[1], move.start_pos[2],
+                    move.start_pos[4], move.start_pos[5], move.start_pos[6],
                     move.axes_r[0], move.axes_r[1], move.axes_r[2],
+                    move.axes_r[4], move.axes_r[5], move.axes_r[6],
                     move.start_v, move.cruise_v, move.accel)
             if move.axes_d[3]:
                 self.extruder.move(next_move_time, move)
