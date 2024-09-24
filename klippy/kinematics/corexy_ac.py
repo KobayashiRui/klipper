@@ -11,6 +11,10 @@ class CoreXYACKinematics:
             self.rails[0].get_endstops()[0][0].add_stepper(s)
         for s in self.rails[0].get_steppers():
             self.rails[1].get_endstops()[0][0].add_stepper(s)
+        
+        self.rails.append(stepper.LookupMultiRail(config.getsection('stepper_a')))
+        self.rails.append(stepper.LookupMultiRail(config.getsection('stepper_c')))
+
         self.rails[0].setup_itersolve('corexy_stepper_alloc', b'+')
         self.rails[1].setup_itersolve('corexy_stepper_alloc', b'-')
         self.rails[2].setup_itersolve('cartesian_stepper_alloc', b'z')
