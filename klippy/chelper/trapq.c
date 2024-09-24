@@ -35,7 +35,10 @@ move_get_coord(struct move *m, double move_time)
     return (struct coord) {
         .x = m->start_pos.x + m->axes_r.x * move_dist,
         .y = m->start_pos.y + m->axes_r.y * move_dist,
-        .z = m->start_pos.z + m->axes_r.z * move_dist };
+        .z = m->start_pos.z + m->axes_r.z * move_dist,
+        .u = m->start_pos.u + m->axes_r.u * move_dist,
+        .v = m->start_pos.v + m->axes_r.v * move_dist,
+        .w = m->start_pos.w + m->axes_r.w * move_dist};
 }
 
 #define NEVER_TIME 9999999999999999.9
