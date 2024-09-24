@@ -39,7 +39,7 @@ class CoreXYACKinematics:
         return [s for rail in self.rails for s in rail.get_steppers()]
     def calc_position(self, stepper_positions):
         pos = [stepper_positions[rail.get_name()] for rail in self.rails]
-        return [0.5 * (pos[0] + pos[1]), 0.5 * (pos[0] - pos[1]), pos[2]]
+        return [0.5 * (pos[0] + pos[1]), 0.5 * (pos[0] - pos[1]), pos[2], pos[3], 0.0, pos[4]] #xyzuvw
     def set_position(self, newpos, homing_axes):
         for i, rail in enumerate(self.rails):
             rail.set_position(newpos)
