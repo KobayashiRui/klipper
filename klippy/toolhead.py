@@ -16,6 +16,7 @@ class Move:
         self.toolhead = toolhead
         self.start_pos = tuple(start_pos)
         self.end_pos = tuple(end_pos)
+        logging.info("start_pos:'%s' , end_pos:'%s'", self.start_pos, self.end_pos)
         self.accel = toolhead.max_accel
         self.junction_deviation = toolhead.junction_deviation
         self.timing_callbacks = []
