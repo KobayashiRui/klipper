@@ -177,7 +177,11 @@ class Homing:
         # Notify of upcoming homing operation
         self.printer.send_event("homing:home_rails_begin", self, rails)
         # Alter kinematics class to think printer is at forcepos
-        homing_axes = [axis for axis in range(3) if forcepos[axis] is not None]
+        #TODO: support corexy_ac
+        #if forcepos and movepos is array of length 4, change to a length of 7
+        forcepos = (forcepos + [None] * 7)[:7]
+        movepos = (movepos + [None] * 7)[:7]
+        homing_axes = [axis for axis in range(7) if forcepos[axis] is not None]
         startpos = self._fill_coord(forcepos)
         homepos = self._fill_coord(movepos)
         self.toolhead.set_position(startpos, homing_axes=homing_axes)
@@ -192,6 +196,7 @@ class Homing:
             startpos = self._fill_coord(forcepos)
             homepos = self._fill_coord(movepos)
             axes_d = [hp - sp for hp, sp in zip(homepos, startpos)]
+            #TODO: support corexy_ac
             move_d = math.sqrt(sum([d*d for d in axes_d[:3]]))
             retract_r = min(1., hi.retract_dist / move_d)
             retractpos = [hp - ad * retract_r
