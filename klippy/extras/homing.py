@@ -189,7 +189,6 @@ class Homing:
         endstops = [es for rail in rails for es in rail.get_endstops()]
         hi = rails[0].get_homing_info()
         hmove = HomingMove(self.printer, endstops)
-        logging.info("Homing... : %s", homepos)
         hmove.homing_move(homepos, hi.speed)
         # Perform second home
         if hi.retract_dist:
