@@ -307,6 +307,10 @@ class LoadCell:
     def _on_sample(self, msg):
         return True
 
+    def is_calibrated(self):
+        return (self.counts_per_gram is not None
+                and self.reference_tare_counts is not None)
+
     def get_collector(self):
         return LoadCellSampleCollector(self.printer, self)
 
