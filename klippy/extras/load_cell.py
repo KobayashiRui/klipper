@@ -282,6 +282,11 @@ class LoadCell:
     def add_client(self, callback):
         self.wh_transformer.add_client(callback)
 
+    def counts_to_grams(self, sample):
+        if not self.is_calibrated() or not self.is_tared():
+            return None
+        return float(sample - self.tare_counts) / self.counts_per_gram
+
     def saturation_range(self):
         return self.sensor.get_range()
 
