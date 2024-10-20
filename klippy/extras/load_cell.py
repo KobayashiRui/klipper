@@ -3,7 +3,7 @@
 # Copyright (C) 2024 Gareth Farrington <gareth@waves.ky>
 #
 # This file may be distributed under the terms of the GNU GPLv3 license.
-import logging
+import collections, logging
 from . import hx71x
 from . import ads1220
 from .bulk_sensor import BatchWebhooksClient
@@ -229,10 +229,24 @@ class LoadCellSampleCollector:
         return self._collect_until(self.max_time + 1.)
 
 # Printer class that controls a load cell
+MIN_COUNTS_PER_GRAM = 1.
 class LoadCell:
     def __init__(self, config, sensor):
+        try:
+            import numpy
+        except Exception:
+            raise config.error("LoadCell requires the numpy module")
         self.printer = printer = config.get_printer()
-        self.sensor = sensor   # must implement BulkAdcSensor
+        self.config_name = config.get_name()
+        self.name = config.get_name().split()[-1]
+        self.sensor = sensor   # must implement BulkSensorAdc
+        buffer_size = sensor.get_samples_per_second() // 2
+        self._force_buffer = collections.deque(maxlen=buffer_size)
+        self.reference_tare_counts = config.getint('reference_tare_counts',
+                                                   default=None)
+        self.tare_counts = self.reference_tare_counts
+        self.counts_per_gram = config.getfloat('counts_per_gram',
+                                   minval=MIN_COUNTS_PER_GRAM, default=None)
 
         LoadCellCommandHelper(config, self)
 
