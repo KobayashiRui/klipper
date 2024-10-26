@@ -771,7 +771,8 @@ NOZZLE_CLEANER = "{action_respond_info(\"Bad tap detected, nozzle needs" \
         " cleaning. nozzle_cleaner_gcode not configured!\")}"
 class LoadCellPrinterProbe(probe.PrinterProbe):
     def __init__(self, config, load_cell_inst, load_cell_endstop):
-        super(LoadCellPrinterProbe, self).__init__(config, load_cell_endstop)
+        #super(LoadCellPrinterProbe, self).__init__(config, load_cell_endstop)
+        super().__init__(config)
         printer = config.get_printer()
         self._load_cell = load_cell_inst
         self._lc_endstop = load_cell_endstop
