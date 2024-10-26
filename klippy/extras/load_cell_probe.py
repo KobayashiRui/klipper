@@ -782,9 +782,9 @@ class LoadCellEndstop:
 
         # Static triggering
         self.trigger_force_grams = config.getfloat('trigger_force',
-                                    minval=10., maxval=250., default=75.)
+                                    minval=10., maxval=25000., default=75.)
         self.safety_limit_grams = config.getfloat('safety_limit',
-                                    minval=100., maxval=5000., default=2000.)
+                                    minval=100., maxval=50000., default=2000.)
         #TODO: Review: In my view, this should always be 1
         self.trigger_count = config.getint("trigger_count",
                                            default=1, minval=1, maxval=5)
