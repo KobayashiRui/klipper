@@ -27,9 +27,14 @@ class Move:
         #TODO: corexy_ac
         if move_d < .000000001:
             # Extrude only move
+            #self.end_pos = (start_pos[0], start_pos[1], start_pos[2],
+            #                end_pos[3])
+            #axes_d[0] = axes_d[1] = axes_d[2] = 0.
+            # Support corexy_ac
             self.end_pos = (start_pos[0], start_pos[1], start_pos[2],
-                            end_pos[3])
+                            end_pos[3], start_pos[4], start_pos[5], start_pos[6])
             axes_d[0] = axes_d[1] = axes_d[2] = 0.
+            axes_d[4] = axes_d[5] = axes_d[6] = 0.
             self.move_d = move_d = abs(axes_d[3])
             inv_move_d = 0.
             if move_d:
