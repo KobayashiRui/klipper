@@ -807,7 +807,7 @@ class LoadCellEndstop:
                                         minval=0.5, maxval=6.0, default=2.0)
         self.continuous_trigger_force = config.getfloat(
             'continuous_tare_trigger_force',
-            minval=1., maxval=250., default=40.)
+            minval=1., maxval=25000., default=40.)
         if (lowpass or notches) and highpass is None:
             raise config.error("Option %s is section %s must be set to use"
                     " continuous tare" % (hp_option, config.get_name(),))
