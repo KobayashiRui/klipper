@@ -839,10 +839,10 @@ class LoadCellEndstop:
     def _config_commands(self):
         self._mcu.add_config_cmd("config_load_cell_endstop oid=%d"
                                  % (self._oid,))
-        #self._mcu.add_config_cmd("load_cell_endstop_home oid=%d trsync_oid=0"
-        #    " trigger_reason=0 error_reason=%i clock=0 sample_count=0"
-        #    " rest_ticks=0 timeout=0" % (self._oid, self.REASON_SENSOR_ERROR)
-        #                         , on_restart=True)
+        self._mcu.add_config_cmd("load_cell_endstop_home oid=%d trsync_oid=0"
+            " trigger_reason=0 error_reason=%i clock=0 sample_count=0"
+            " rest_ticks=0 timeout=0" % (self._oid, self.REASON_SENSOR_ERROR)
+                                 , on_restart=True)
         # configure filter:
         cmd = ("config_filter_section_load_cell_endstop oid=%d n_sections=%d"
                " section_idx=%d sos0=%i sos1=%i sos2=%i sos3=%i sos4=%i")
