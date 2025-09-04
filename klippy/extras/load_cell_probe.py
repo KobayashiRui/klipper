@@ -943,7 +943,7 @@ class LoadCellEndstop:
             "Sensor reported errors while homing: %i errors, %i overflows"
                               % (errors[0], errors[1]))
         tare_counts = np.average(np.array(tare_samples)[:, 2].astype(float))
-        #self.set_endstop_range(int(tare_counts))
+        self.set_endstop_range(int(tare_counts))
 
     def get_oid(self):
         return self._oid
